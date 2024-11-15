@@ -15,7 +15,7 @@ export const WavyBackground = ({
   waveOpacity = 0.5,
   ...props
 }: {
-  children?: React.ReactNode
+  children?: any
   className?: string
   containerClassName?: string
   colors?: string[]
@@ -26,7 +26,6 @@ export const WavyBackground = ({
   waveOpacity?: number
   [key: string]: any
 }) => {
-  const [mount, setMount] = useState(false)
   const noise = createNoise3D()
   let w: number,
     h: number,
@@ -46,9 +45,10 @@ export const WavyBackground = ({
         return 0.001
     }
   }
+
   const init = () => {
     canvas = canvasRef.current
-    ctx = canvas?.getContext('2d')
+    ctx = canvas.getContext('2d')
     w = ctx.canvas.width = window.innerWidth
     h = ctx.canvas.height = window.innerHeight
     ctx.filter = `blur(${blur}px)`
@@ -108,11 +108,8 @@ export const WavyBackground = ({
         !navigator.userAgent.includes('Chrome'),
     )
   }, [])
-  useEffect(() => {
-    setMount(true)
-  }, [])
 
-  return mount ? (
+  return (
     <div
       className={cn(
         'h-screen flex flex-col items-center justify-center',
@@ -134,5 +131,5 @@ export const WavyBackground = ({
         {children}
       </div>
     </div>
-  ) : null
+  )
 }
